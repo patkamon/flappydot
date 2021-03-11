@@ -54,7 +54,7 @@ class Dot(Sprite):
         self.jump()
 
     def update(self):
-        if self.is_started:
+        if self.is_started and self.gameover == False:
             self.y += self.vy
             self.vy += GRAVITY
 
@@ -62,8 +62,15 @@ class Dot(Sprite):
         self.is_started = True
 
     def jump(self):
-        self.vu = JUMP_VELOCITY
-        self.vy =self.vu
+        if self.gameover == False:
+            self.vu = JUMP_VELOCITY
+            self.vy =self.vu
+
+    def is_out_of_screen(self):
+        if self.y >490:
+            self.gameover = True
+        if self.y < 0:
+            self.gameover = True
 
 
 class FlappyGame(GameApp):
@@ -85,6 +92,7 @@ class FlappyGame(GameApp):
         if not self.pillar_pair.in_frame:
             self.pillar_pair.reset_position()
             self.pillar_pair.start()
+        self.dot.is_out_of_screen()
 
 
     def on_key_pressed(self, event):

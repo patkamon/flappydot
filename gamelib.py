@@ -52,7 +52,9 @@ class Text(GameCanvasElement):
 class Sprite(GameCanvasElement):
     def __init__(self, game_app, image_filename, x=0, y=0):
         self.image_filename = image_filename
+        self.gameover = False
         super().__init__(game_app, x, y)
+
 
     def init_canvas_object(self):
         self.photo_image = tk.PhotoImage(file=self.image_filename)
@@ -80,6 +82,8 @@ class GameApp(ttk.Frame):
 
         self.parent.bind('<KeyPress>', self.on_key_pressed)
         self.parent.bind('<KeyRelease>', self.on_key_released)
+
+
         
     def create_canvas(self):
         self.canvas = tk.Canvas(self, borderwidth=0,
