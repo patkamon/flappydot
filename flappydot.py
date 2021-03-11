@@ -8,9 +8,15 @@ CANVAS_HEIGHT = 500
 UPDATE_DELAY = 33
 GRAVITY = 2.5
 STARTING_VELOCITY = -30
+PILLAR_SPEED = 10
 
 class PillarPair(Sprite):
-    pass
+    def init_element(self):
+        self.vx = PILLAR_SPEED
+
+    def update(self):
+        self.x -= self.vx
+
 
 class Dot(Sprite):
     def init_element(self):
