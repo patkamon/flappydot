@@ -33,7 +33,7 @@ class PillarPair(Sprite):
             self.stop()
 
     def reset_position(self):
-        self.x = self.start_x + 50
+        self.x = self.start_x + 60
         self.y = self.random_height()
         self.stop()
 
