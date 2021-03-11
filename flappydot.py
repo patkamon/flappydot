@@ -11,6 +11,8 @@ STARTING_VELOCITY = -30
 JUMP_VELOCITY = -20
 PILLAR_SPEED = 10
 
+
+
 class PillarPair(Sprite):
     def init_element(self):
         self.vx = PILLAR_SPEED
@@ -27,7 +29,7 @@ class Dot(Sprite):
         self.jump()
 
     def update(self):
-        if self.is_started:
+        if self.is_started and self.gameover == False:
             self.y += self.vy
             self.vy += GRAVITY
 
@@ -35,8 +37,15 @@ class Dot(Sprite):
         self.is_started = True
 
     def jump(self):
-        self.vu = JUMP_VELOCITY
-        self.vy =self.vu
+        if self.gameover == False:
+            self.vu = JUMP_VELOCITY
+            self.vy =self.vu
+
+    def is_out_of_screen(self):
+        if self.y >490:
+            self.gameover = True
+        if self.y < 0:
+            self.gameover = True
 
 
 class FlappyGame(GameApp):
@@ -55,7 +64,7 @@ class FlappyGame(GameApp):
         pass
 
     def post_update(self):
-        pass
+        self.dot.is_out_of_screen()
 
     def on_key_pressed(self, event):
         self.dot.is_started = True
