@@ -44,7 +44,7 @@ class PillarPair(Sprite):
         self.in_frame = False
 
     def random_height(self):
-        return rn.randint(0,500)
+        return rn.randint(30,470)
 
 
 class Dot(Sprite):
@@ -54,7 +54,7 @@ class Dot(Sprite):
         self.jump()
 
     def update(self):
-        if self.is_started and self.gameover == False:
+        if self.is_started and self.gameover == False :
             self.y += self.vy
             self.vy += GRAVITY
 
@@ -71,6 +71,17 @@ class Dot(Sprite):
             self.gameover = True
         if self.y < 0:
             self.gameover = True
+
+    def is_collision(self,pillar):
+        x = pillar.x
+        y1 = pillar.y - 100
+        y2 = pillar.y + 100
+        size = 40
+        x1, x2 = (x) - size , (x) + size
+        # y1, y2 = (y) - size / 2, (y) + size / 2
+        tx = self.x
+        ty = self.y
+        return x1 <= tx <= x2 and ( 0 <= ty <= y1 or y2 <=ty <= 500)
 
 
 class FlappyGame(GameApp):
@@ -93,6 +104,9 @@ class FlappyGame(GameApp):
             self.pillar_pair.reset_position()
             self.pillar_pair.start()
         self.dot.is_out_of_screen()
+        if self.dot.is_collision(self.pillar_pair) :
+            self.dot.gameover = True
+
 
 
     def on_key_pressed(self, event):
