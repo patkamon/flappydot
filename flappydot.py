@@ -107,10 +107,9 @@ class FlappyGame(GameApp):
             self.pillar_pair.reset_position()
             self.pillar_pair.start()
         self.dot.is_out_of_screen()
-        if self.dot.is_collision(self.pillar_pair) :
+        if self.dot.is_collision(self.pillar_pair) or self.dot.gameover:
             self.dot.gameover = True
             self.pillar_pair.game_over()
-
 
 
     def on_key_pressed(self, event):
