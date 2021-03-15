@@ -29,11 +29,12 @@ class PillarPair(Sprite):
             self.stop()
 
     def is_out_of_screen(self):
-        if self.x > CANVAS_WIDTH:
+        if self.x < 0 :
             self.stop()
 
     def reset_position(self):
-        self.x = self.start_x + 60
+        self.x = self.start_x
+        print(self.x)
         self.y = self.random_height()
         self.stop()
 
@@ -91,7 +92,9 @@ class FlappyGame(GameApp):
     def create_sprites(self):
         self.dot = Dot(self, 'images/dot.png', CANVAS_WIDTH // 2, CANVAS_HEIGHT // 2)
         self.pillar_pair = PillarPair(self, 'images/pillar-pair.png', CANVAS_WIDTH, CANVAS_HEIGHT // 2)
+        self.pillar_pair2 = PillarPair(self, 'images/pillar-pair.png', CANVAS_WIDTH+300, CANVAS_HEIGHT // 2)
 
+        self.elements.append(self.pillar_pair2)
         self.elements.append(self.pillar_pair)
         self.elements.append(self.dot)
 
@@ -103,14 +106,15 @@ class FlappyGame(GameApp):
         pass
 
     def post_update(self):
-        if not self.pillar_pair.in_frame:
-            self.pillar_pair.reset_position()
-            self.pillar_pair.start()
-        self.dot.is_out_of_screen()
-        if self.dot.is_collision(self.pillar_pair) or self.dot.gameover:
-            self.dot.gameover = True
-            self.pillar_pair.game_over()
-
+        for i in self.elements:
+            if i != self.dot:
+                if not i.in_frame:
+                    i.reset_position()
+                    i.start()
+                # self.dot.is_out_of_screen()
+                if self.dot.is_collision(i) or self.dot.gameover:
+                    self.dot.gameover = True
+                    i.game_over()
 
     def on_key_pressed(self, event):
         self.dot.is_started = True
