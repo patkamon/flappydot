@@ -46,6 +46,9 @@ class PillarPair(Sprite):
     def random_height(self):
         return rn.randint(30,470)
 
+    def game_over(self):
+        self.vx = 0
+
 
 class Dot(Sprite):
     def init_element(self):
@@ -106,6 +109,7 @@ class FlappyGame(GameApp):
         self.dot.is_out_of_screen()
         if self.dot.is_collision(self.pillar_pair) :
             self.dot.gameover = True
+            self.pillar_pair.game_over()
 
 
 
